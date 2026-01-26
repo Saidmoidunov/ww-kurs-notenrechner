@@ -72,3 +72,8 @@ button.mini{
   border-radius: 999px;
   background: #2b6cff;
 }
+.cornerBadge b{
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
