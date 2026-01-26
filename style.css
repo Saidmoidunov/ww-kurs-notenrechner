@@ -4,7 +4,11 @@ body {
   color: #111;
 
   background-image:
-    linear-gradient(rgba(246,247,251,0.35), rgba(246,247,251,0.82)),
+    background-image: url("assets/bg.jpg");
+background-size: cover;
+background-position: center;
+background-attachment: fixed;
+
     url("https://server.wallpaperalchemy.com/storage/wallpapers/405/berserk-guts-snow-mountain-wallpaper-4k.jpg");
   background-size: cover;
   background-position: center;
@@ -76,5 +80,6 @@ hr { border: none; border-top: 1px solid #eee; margin: 14px 0; }
   border-radius: 999px;
   background: #2b6cff;
 }
+
 
 
