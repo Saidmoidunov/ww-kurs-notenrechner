@@ -1,5 +1,18 @@
 :root { font-family: system-ui, Arial, sans-serif; }
-body { margin: 0; background: #f6f7fb; color: #111; }
+body {
+  margin: 0;
+  color: #111;
+
+  background-image:
+    linear-gradient(rgba(246,247,251,0.82), rgba(246,247,251,0.82)),
+    url("https://server.wallpaperalchemy.com/storage/wallpapers/405/berserk-guts-snow-mountain-wallpaper-4k.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  background-color: #f6f7fb;
+}
+
 .wrap { max-width: 980px; margin: 0 auto; padding: 16px; }
 h1 { margin: 8px 0 4px; }
 h2 { margin: 0 0 10px; font-size: 18px; }
@@ -63,3 +76,4 @@ hr { border: none; border-top: 1px solid #eee; margin: 14px 0; }
   border-radius: 999px;
   background: #2b6cff;
 }
+
