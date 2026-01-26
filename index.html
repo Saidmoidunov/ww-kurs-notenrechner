@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WW-Kurs Notenrechner (Studienkolleg)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="wrap">
+    <h1>WW-Kurs Notenrechner</h1>
+    <p class="muted">
+      Noten: 1,0–5,0 · Gewichtung: 10–100% · Rundung: 4,5 → 4 / 4,6 → 5
+    </p>
+  </header>
+
+  <main class="wrap grid">
+    <section class="card">
+      <h2>1) Semester & Fach</h2>
+
+      <label>Semester</label>
+      <select id="semester">
+        <option value="1">1. Semester</option>
+        <option value="2">2. Semester</option>
+      </select>
+
+      <label>Fach</label>
+      <select id="subject"></select>
+
+      <div class="row">
+        <button id="btnMotivation" type="button">✨ Motivation</button>
+        <button id="btnResetSubject" type="button" class="danger">🧹 Fach zurücksetzen</button>
+      </div>
+
+      <p id="motivationBox" class="quote"></p>
+    </section>
+
+    <section class="card">
+      <h2>2) Leistung hinzufügen</h2>
+
+      <label>Name der Leistung</label>
+      <input id="title" placeholder="z.B. Klausur 1 / Präsentation / Test" />
+
+      <div class="row">
+        <div class="col">
+          <label>Note (1,0–5,0)</label>
+          <input id="note" placeholder="z.B. 3.3" inputmode="decimal" />
+        </div>
+        <div class="col">
+          <label>Gewichtung % (10–100)</label>
+          <input id="weight" placeholder="z.B. 40" inputmode="decimal" />
+        </div>
+      </div>
+
+      <button id="btnAdd" type="button">➕ Speichern</button>
+
+      <hr />
+
+      <h3>Zielnote</h3>
+      <div class="row">
+        <input id="target" placeholder="z.B. 3.0" inputmode="decimal" />
+        <button id="btnSaveTarget" type="button">🎯 Zielnote speichern</button>
+      </div>
+      <p class="muted">Zielnote gilt: „… oder besser“ (nach Rundungsregel).</p>
+
+      <hr />
+
+      <div class="row">
+        <button id="btnExport" type="button">⬇️ Export (JSON)</button>
+        <label class="file">
+          ⬆️ Import (JSON)
+          <input id="importFile" type="file" accept="application/json" />
+        </label>
+      </div>
+      <p class="muted small">Automatische Speicherung im Browser (localStorage).</p>
+    </section>
+
+    <section class="card span2">
+      <h2>3) Übersicht</h2>
+      <div id="list"></div>
+      <div id="result" class="result"></div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">SBM</div>
+      <div class="brandText">
+        <div class="brandLine">Made by <b>Saidburkan Moydunov</b></div>
+        <div class="muted small">WW-Kurs Notenrechner · Studienkolleg</div>
+      </div>
+    </div>
+  </footer>
+
+  <a class="cornerBadge" href="#" onclick="return false;">
+    <span class="dot"></span>
+    <span>Made by Saidburkan Moydunov</span>
+  </a>
+
+  <script src="app.js"></script>
+</body>
+</html>
