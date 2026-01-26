@@ -3,20 +3,13 @@ body {
   margin: 0;
   color: #111;
 
-  background-image:
-    background-image: url("assets/bg.jpg");
-background-size: cover;
-background-position: center;
-background-attachment: fixed;
-
-    url("https://server.wallpaperalchemy.com/storage/wallpapers/405/berserk-guts-snow-mountain-wallpaper-4k.jpg");
+  background-image: url(https://server.wallpaperalchemy.com/storage/wallpapers/405/berserk-guts-snow-mountain-wallpaper-4k.jpg);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
 
   background-color: #f6f7fb;
 }
-
 .wrap { max-width: 980px; margin: 0 auto; padding: 16px; }
 h1 { margin: 8px 0 4px; }
 h2 { margin: 0 0 10px; font-size: 18px; }
@@ -80,6 +73,7 @@ hr { border: none; border-top: 1px solid #eee; margin: 14px 0; }
   border-radius: 999px;
   background: #2b6cff;
 }
+
 
 
 
