@@ -1,10 +1,8 @@
-// ---------- Subjects ----------
 const SUBJECTS = {
   1: ["Deutsch", "Mathematik", "VWL", "Informatik", "Englisch", "Wirtschaftspsychologie"],
   2: ["Deutsch", "Mathematik", "BWL", "Informatik", "Englisch", "Wirtschaftspsychologie"],
 };
 
-// ---------- Quotes (German) ----------
 const QUOTES = [
   "Disziplin schlägt Motivation, wenn Motivation fehlt.",
   "Kleine Schritte führen zu großen Ergebnissen.",
@@ -18,18 +16,16 @@ const QUOTES = [
   "Ein gutes Ergebnis beginnt mit einem guten Plan."
 ];
 
-// ---------- Storage ----------
 const KEY = "wwkurs_v1";
 function load() { try { return JSON.parse(localStorage.getItem(KEY)) ?? {}; } catch { return {}; } }
 function save(data) { localStorage.setItem(KEY, JSON.stringify(data)); }
 function ensureSem(data, sem) { if (!data[sem]) data[sem] = { subjects: {}, targets: {} }; return data[sem]; }
 function ensureSubject(semData, subject) { if (!semData.subjects[subject]) semData.subjects[subject] = []; return semData.subjects[subject]; }
 
-// ---------- Helpers ----------
 function parseNum(v) { return Number(String(v ?? "").replace(",", ".").trim()); }
 function clampNote(x) { return Math.max(1.0, Math.min(5.0, x)); }
 
-// Rundung: 4,5 -> 4 ; 4,6 -> 5  (half-down)
+// 4,5 -> 4 ; 4,6 -> 5  (half-down)
 function roundHalfDown(x) {
   const base = Math.floor(x);
   const frac = x - base;
@@ -60,7 +56,6 @@ function neededForTarget(list, target) {
   return { remaining, needed: clampNote(needed), msg: null };
 }
 
-// ---------- UI ----------
 const elSemester = document.getElementById("semester");
 const elSubject = document.getElementById("subject");
 const elTitle = document.getElementById("title");
@@ -161,6 +156,27 @@ document.getElementById("importFile").addEventListener("change", async (e) => {
 elSemester.addEventListener("change", () => { populateSubjects(); render(); });
 elSubject.addEventListener("change", render);
 
+// DELETE handler (works for dynamically created buttons)
+elList.addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-del]");
+  if (!btn) return;
+
+  const idx = Number(btn.getAttribute("data-del"));
+  const sem = Number(elSemester.value);
+  const subject = elSubject.value;
+
+  const data = load();
+  const semData = ensureSem(data, sem);
+  const list = ensureSubject(semData, subject);
+
+  if (!Number.isFinite(idx) || idx < 0 || idx >= list.length) return;
+  if (!confirm("Eintrag wirklich löschen?")) return;
+
+  list.splice(idx, 1);
+  save(data);
+  render();
+});
+
 function populateSubjects() {
   const sem = Number(elSemester.value);
   const subjects = SUBJECTS[sem];
@@ -180,7 +196,6 @@ function render() {
   const semData = ensureSem(data, sem);
   const list = ensureSubject(semData, subject);
 
-  // List table
   if (list.length === 0) {
     elList.innerHTML = `<p class="muted">Noch keine Einträge für <b>${subject}</b>.</p>`;
   } else {
@@ -203,7 +218,6 @@ function render() {
       </table>`;
   }
 
-  // Result
   const res = calc(list);
   const open = Math.max(0, 100 - res.sumW);
 
@@ -221,7 +235,6 @@ function render() {
     `;
   }
 
-  // Target
   const target = semData.targets[subject];
   if (target == null) {
     html += `<hr/><div class="muted">🎯 Keine Zielnote gesetzt.</div>`;
@@ -237,7 +250,6 @@ function render() {
     }
   }
 
-  // Tip
   const tip = (res.rounded != null && res.rounded >= 5)
     ? "Tipp: Priorität auf hohe Gewichtungen (Klausuren) – dort bringt Verbesserung am meisten."
     : "Tipp: Konzentriere dich auf Leistungen mit hohem Gewicht und schwächerer Note.";
@@ -251,27 +263,5 @@ function escapeHtml(s) {
   return (s || "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 }
 
-// Init
 populateSubjects();
 render();
-
-// DELETE button handler (event delegation)
-elList.addEventListener("click", (e) => {
-  const btn = e.target.closest("button[data-del]");
-  if (!btn) return;
-
-  const idx = Number(btn.getAttribute("data-del"));
-  const sem = Number(elSemester.value);
-  const subject = elSubject.value;
-
-  const data = load();
-  const semData = ensureSem(data, sem);
-  const list = ensureSubject(semData, subject);
-
-  if (!Number.isFinite(idx) || idx < 0 || idx >= list.length) return;
-  if (!confirm("Eintrag wirklich löschen?")) return;
-
-  list.splice(idx, 1);
-  save(data);
-  render();
-});
