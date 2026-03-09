@@ -5,6 +5,22 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>WW-Kurs Notenrechner (Studienkolleg)</title>
   <link rel="stylesheet" href="style.css" />
+  
+  <!-- Вставка стилей внутри <head> -->
+  <style>
+    body {
+      background-image: url('https://wallpapercave.com/wp/wp13153958.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    
+    footer .muted.small {
+      color: #2E8B57 !important;  /* Морской синий для текста */
+      font-size: 16px !important; /* Немного уменьшить размер текста для лучшего восприятия */
+      font-weight: normal !important; /* Сделать текст не жирным */
+    }
+  </style>
 </head>
 <body>
   <header class="wrap">
@@ -17,7 +33,6 @@
   <main class="wrap grid">
     <section class="card">
       <h2>1) Semester & Fach</h2>
-
       <label>Semester</label>
       <select id="semester">
         <option value="1">1. Semester</option>
@@ -37,7 +52,6 @@
 
     <section class="card">
       <h2>2) Leistung hinzufügen</h2>
-
       <label>Name der Leistung</label>
       <input id="title" placeholder="z.B. Klausur 1 / Präsentation / Test" />
 
@@ -91,29 +105,7 @@
       </div>
     </div>
   </footer>
-   <script src="app.js"></script>
-  
-  <!-- Вставка стилей в самый низ -->
-  <style>
-    body {
-      background-image: url('https://wallpapercave.com/wp/wp13153958.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-  </style>
-</body>
-</html>
-      <script src="app.js"></script>
-  
-  <!-- Вставка стилей в самый низ -->
-  <style>
-    footer .muted.small {
-      color: #2E8B57 !important;  /* Морской синий для текста */
-      font-size: 16px !important; /* Немного уменьшить размер текста для лучшего восприятия */
-      font-weight: normal !important; /* Сделать текст не жирным */
-    }
-  </style>
-</body>
-</html>
 
+  <script src="app.js"></script>
+</body>
+</html>
