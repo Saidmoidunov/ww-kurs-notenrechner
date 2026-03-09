@@ -1,39 +1,50 @@
 :root {
   font-family: system-ui, Arial, sans-serif;
+  --primary-color: #2b6cff;
+  --secondary-color: #ffffff;
+  --accent-color: #f1f1f1;
+  --background-color: rgba(0, 0, 0, 0.6);
 }
 
 body {
   margin: 0;
-  background: url('https://www.peakpx.com/en/hd-wallpaper-desktop-aoanm') no-repeat center center fixed;
+  background: url('/mnt/data/HD-wallpaper-border-of-kyrgyzstan-china-peaks-river-sky-landscape-sunset.jpg') no-repeat center center fixed;
   background-size: cover;
-  color: #fff;
+  color: var(--secondary-color);
 }
 
 .wrap {
   max-width: 980px;
   margin: 0 auto;
   padding: 16px;
-  background-color: rgba(0, 0, 0, 0.5); /* Фонго жарым-жартылай тунук түстө фон */
+  background-color: var(--background-color);
   border-radius: 15px;
 }
 
-h1, h2, h3 {
-  font-family: 'Arial', sans-serif;
+header {
+  text-align: center;
+  color: var(--secondary-color);
 }
 
 h1 {
-  color: #fff;
-  font-size: 36px;
+  font-size: 42px;
   margin-bottom: 10px;
+  font-weight: bold;
 }
 
 h2, h3 {
-  color: #f1f1f1;
-  margin: 10px 0;
+  color: var(--accent-color);
+  font-weight: 600;
 }
 
 .muted {
   color: #bbb;
+}
+
+.author p {
+  margin-top: 10px;
+  color: var(--accent-color);
+  font-style: italic;
 }
 
 .grid {
@@ -48,6 +59,107 @@ h2, h3 {
   }
   .span2 {
     grid-column: span 2;
+  }
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transition: 0.3s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: var(--accent-color);
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 10px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #1d58cc;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.col {
+  flex: 1;
+}
+
+hr {
+  margin: 14px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+footer {
+  padding-top: 20px;
+  text-align: center;
+}
+
+footer .brand {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+  color: var(--secondary-color);
+}
+
+footer .logo {
+  background-color: #111;
+  padding: 12px;
+  border-radius: 50%;
+  font-size: 18px;
+  color: var(--secondary-color);
+}
+
+footer .brandText {
+  font-size: 14px;
+}
+
+footer .brandLine {
+  font-weight: bold;
+}
+
+.quote {
+  margin-top: 12px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  font-style: italic;
+  font-size: 16px;
+}    grid-column: span 2;
   }
 }
 
@@ -131,3 +243,4 @@ footer .brandText {
 footer .brandLine {
   font-weight: bold;
 }
+
