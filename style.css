@@ -77,3 +77,17 @@ button.mini{
   text-transform: uppercase;
   letter-spacing: .4px;
 }
+/* Изменяем цвет для текста "SBM" */
+.footer .logo {
+  color: #2E8B57 !important; /* Морской синий цвет */
+}
+
+/* Изменяем цвет для текста "Made by Saidburkan Moidunov" */
+.footer .brandLine {
+  color: #2E8B57 !important;  /* Морской синий цвет */
+}
+
+/* Изменяем цвет для текста "WW-Kurs Notenrechner · Studienkolleg" */
+.footer .muted.small {
+  color: #2E8B57 !important;  /* Морской синий цвет */
+}
