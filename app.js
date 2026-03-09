@@ -1,96 +1,79 @@
-<!doctype html>
-<html lang="de">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>WW-Kurs Notenrechner</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header class="wrap">
-    <h1>WW-Kurs Notenrechner</h1>
-    <p class="muted">
-      Noten: 1,0–5,0 · Gewichtung: 10–100% · Rundung: 4,5 → 4 / 4,6 → 5
-    </p>
-  </header>
+:root { font-family: system-ui, Arial, sans-serif; }
+body { margin: 0; background: #f6f7fb; color: #111; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 16px; }
+h1 { margin: 8px 0 4px; }
+h2 { margin: 0 0 10px; font-size: 18px; }
+h3 { margin: 0 0 8px; font-size: 16px; }
+.muted { color: #555; }
+.small { font-size: 13px; }
 
-  <main class="wrap grid">
-    <section class="card">
-      <h2>1) Semester & Fach</h2>
-      <label>Semester</label>
-      <select id="semester">
-        <option value="1">1. Semester</option>
-        <option value="2">2. Semester</option>
-      </select>
+.grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } .span2 { grid-column: span 2; } }
 
-      <label>Fach</label>
-      <select id="subject"></select>
+.card { background: white; border-radius: 14px; padding: 14px; box-shadow: 0 6px 16px rgba(0,0,0,.06); }
+label { display: block; margin: 10px 0 6px; font-weight: 600; }
+input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 10px; }
+button { margin-top: 12px; width: 100%; padding: 10px; border: 0; border-radius: 10px; cursor: pointer; background: #2b6cff; color: white; font-weight: 700; }
+button:hover { filter: brightness(.98); }
+.row { display: flex; gap: 10px; align-items: center; }
+.col { flex: 1; }
+.danger { background: #d63b3b; }
+hr { border: none; border-top: 1px solid #eee; margin: 14px 0; }
+.quote { margin: 12px 0 0; padding: 10px; background: #f2f6ff; border-radius: 10px; min-height: 22px; }
+.result { margin-top: 12px; padding: 12px; background: #f7f7f7; border-radius: 12px; }
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: 8px; border-bottom: 1px solid #eee; text-align: left; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; }
+.ok { background: #e8fff0; }
+.no { background: #ffecec; }
 
-      <div class="row">
-        <button id="btnMotivation" type="button">✨ Motivation</button>
-        <button id="btnResetSubject" type="button" class="danger">🧹 Fach zurücksetzen</button>
-      </div>
+.file { display: inline-flex; align-items: center; justify-content: center; padding: 10px; border-radius: 10px; background: #111; color: #fff; cursor: pointer; width: 100%; margin-top: 12px; }
+.file input { display: none; }
 
-      <p id="motivationBox" class="quote"></p>
-    </section>
+/* mini delete button */
+button.mini{
+  width: auto;
+  padding: 6px 10px;
+  margin: 0;
+  border-radius: 10px;
+  font-weight: 800;
+}
 
-    <section class="card">
-      <h2>2) Leistung hinzufügen</h2>
+/* Branding */
+.footer { padding-bottom: 34px; }
+.brand { display: flex; gap: 12px; align-items: center; justify-content: center; }
+.logo {
+  width: 46px; height: 46px; border-radius: 14px;
+  display: grid; place-items: center;
+  background: #111; color: #fff;
+  font-weight: 900; letter-spacing: 1px;
+}
+.brandLine { font-size: 14px; }
 
-      <label>Name der Leistung</label>
-      <input id="title" placeholder="z.B. Klausur 1 / Präsentation / Test" />
-
-      <div class="row">
-        <div class="col">
-          <label>Note (1,0–5,0)</label>
-          <input id="note" placeholder="z.B. 3.3" inputmode="decimal" />
-        </div>
-        <div class="col">
-          <label>Gewichtung % (10–100)</label>
-          <input id="weight" placeholder="z.B. 40" inputmode="decimal" />
-        </div>
-      </div>
-
-      <button id="btnAdd" type="button">➕ Speichern</button>
-
-      <hr />
-
-      <h3>Zielnote</h3>
-      <div class="row">
-        <input id="target" placeholder="z.B. 3.0" inputmode="decimal" />
-        <button id="btnSaveTarget" type="button">🎯 Zielnote speichern</button>
-      </div>
-      <p class="muted">Zielnote gilt: „… oder besser“ (nach Rundungsregel).</p>
-
-      <hr />
-
-      <div class="row">
-        <button id="btnExport" type="button">⬇️ Export (JSON)</button>
-        <label class="file">
-          ⬆️ Import (JSON)
-          <input id="importFile" type="file" accept="application/json" />
-        </label>
-      </div>
-      <p class="muted small">Automatische Speicherung im Browser (localStorage).</p>
-    </section>
-
-    <section class="card span2">
-      <h2>3) Übersicht</h2>
-      <div id="list"></div>
-      <div id="result" class="result"></div>
-    </section>
-  </main>
-
-  <footer class="wrap footer">
-    <div class="brand">
-      <div class="logo" aria-hidden="true">SBM</div>
-      <div class="brandText">
-        <div class="brandLine">Made by <b>Saidburkan Moydunov</b></div>
-        <div class="muted small">WW-Kurs Notenrechner · Studienkolleg</div>
-      </div>
-    </div>
-  </footer>
-
-  <script src="app.js"></script>
-</body>
-</html>
+/* Corner badge */
+.cornerBadge{
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 12px;
+  background: rgba(17,17,17,.92);
+  color: #fff;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 12.5px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.18);
+  backdrop-filter: blur(6px);
+}
+.cornerBadge .dot{
+  width: 8px; height: 8px;
+  border-radius: 999px;
+  background: #2b6cff;
+}
+.cornerBadge b{
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
