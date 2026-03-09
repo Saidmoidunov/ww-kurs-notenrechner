@@ -1,87 +1,86 @@
-const SUBJECTS = {
-  1: ["Deutsch", "Mathematik", "VWL", "Informatik", "Englisch", "Wirtschaftspsychologie"],
-  2: ["Deutsch", "Mathematik", "BWL", "Informatik", "Englisch", "Wirtschaftspsychologie"],
-};
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WW-Kurs Notenrechner</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="wrap">
+    <h1>WW-Kurs Notenrechner</h1>
+    <p class="muted">Noten: 1,0–5,0 · Gewichtung: 10–100% · Rundung: 4,5 → 4 / 4,6 → 5</p>
+  </header>
 
-const QUOTES = [
-  "Disziplin schlägt Motivation, wenn Motivation fehlt.",
-  "Kleine Schritte führen zu großen Ergebnissen.",
-  "Nicht perfekt sein – konsequent sein.",
-  "Du musst nicht schnell sein. Du musst nur dranbleiben.",
-  "Erfolg ist die Summe kleiner Anstrengungen – jeden Tag.",
-  "Wenn es schwer wird, bist du auf dem richtigen Weg.",
-  "Konstanz ist eine Superpower.",
-  "Heute lernen, morgen gewinnen.",
-  "Fokus ist wichtiger als Talent.",
-  "Ein gutes Ergebnis beginnt mit einem guten Plan."
-];
+  <main class="wrap grid">
+    <section class="card">
+      <h2>1) Semester & Fach</h2>
+      <label>Semester</label>
+      <select id="semester">
+        <option value="1">1. Semester</option>
+        <option value="2">2. Semester</option>
+      </select>
 
-const KEY = "wwkurs_v1";
-function load() { try { return JSON.parse(localStorage.getItem(KEY)) ?? {}; } catch { return {}; } }
-function save(data) { localStorage.setItem(KEY, JSON.stringify(data)); }
+      <label>Fach</label>
+      <select id="subject"></select>
 
-function ensureSem(data, sem) { if (!data[sem]) data[sem] = { subjects: {}, targets: {} }; return data[sem]; }
-function ensureSubject(semData, subject) { if (!semData.subjects[subject]) semData.subjects[subject] = []; return semData.subjects[subject]; }
+      <div class="row">
+        <button id="btnMotivation" type="button">✨ Motivation</button>
+      </div>
 
-function parseNum(v) { return Number(String(v ?? "").replace(",", ".").trim()); }
-function clampNote(x) { return Math.max(1.0, Math.min(5.0, x)); }
+      <p id="motivationBox" class="quote"></p>
+    </section>
 
-function roundHalfDown(x) {
-  const base = Math.floor(x);
-  const frac = x - base;
-  return (frac < 0.5) ? base : base + 1;
-}
+    <section class="card">
+      <h2>2) Leistung hinzufügen</h2>
 
-function calc(list) {
-  const sumW = list.reduce((a, it) => a + it.weight, 0);
-  const sumNW = list.reduce((a, it) => a + it.note * it.weight, 0);
-  if (sumW <= 0) return { sumW: 0, sumNW: 0, raw: null, rounded: null, status: "—" };
-  const raw = sumNW / sumW;
-  const rounded = roundHalfDown(raw);
-  const status = (rounded <= 4) ? "bestanden ✅" : "nicht bestanden ❌";
-  return { sumW, sumNW, raw, rounded, status };
-}
+      <label>Name der Leistung</label>
+      <input id="title" placeholder="z.B. Klausur 1 / Präsentation / Test" />
 
-function calcEndNote(subjects) {
-  let totalSumW = 0;
-  let totalSumNW = 0;
+      <div class="row">
+        <div class="col">
+          <label>Note (1,0–5,0)</label>
+          <input id="note" placeholder="z.B. 3.3" inputmode="decimal" />
+        </div>
+        <div class="col">
+          <label>Gewichtung % (10–100)</label>
+          <input id="weight" placeholder="z.B. 40" inputmode="decimal" />
+        </div>
+      </div>
 
-  subjects.forEach(subject => {
-    const result = calc(subject.grades);
-    totalSumW += result.sumW;
-    totalSumNW += result.sumNW;
-  });
+      <button id="btnAdd" type="button">➕ Speichern</button>
 
-  const finalRaw = totalSumNW / totalSumW;
-  const finalRounded = roundHalfDown(finalRaw);
+      <hr />
 
-  return { finalRaw, finalRounded };
-}
+      <h3>Zielnote</h3>
+      <div class="row">
+        <input id="target" placeholder="z.B. 3.0" inputmode="decimal" />
+        <button id="btnSaveTarget" type="button">🎯 Zielnote speichern</button>
+      </div>
 
-function neededForTarget(subjects, target) {
-  const { sumW, sumNW } = calc(subjects);
-  const remaining = 100 - sumW;
-  const threshold = clampNote(target + 0.5);
+      <hr />
 
-  const needed = (threshold * 100 - sumNW) / remaining;
-  return { needed: Math.max(1, Math.min(needed, 5)), remaining };
-}
+      <button id="btnCalculate" type="button">📊 Alle Noten berechnen</button>
 
-document.getElementById("btnMotivation").addEventListener("click", () => {
-  const elMotivation = document.getElementById("motivationBox");
-  elMotivation.textContent = "✨ " + QUOTES[Math.floor(Math.random() * QUOTES.length)];
-});
+      <div id="result"></div>
+    </section>
 
-document.getElementById("btnCalculate").addEventListener("click", () => {
-  const subjects = [
-    { name: 'Deutsch', grades: [{ note: 2.5, weight: 40 }, { note: 3.0, weight: 60 }] },
-    { name: 'Mathematik', grades: [{ note: 3.5, weight: 70 }, { note: 2.5, weight: 30 }] },
-    { name: 'VWL', grades: [{ note: 4.0, weight: 50 }, { note: 4.5, weight: 50 }] },
-    { name: 'BWL', grades: [{ note: 3.0, weight: 80 }, { note: 3.2, weight: 20 }] },
-  ];
+    <section class="card span2">
+      <h2>3) Übersicht</h2>
+      <div id="list"></div>
+    </section>
+  </main>
 
-  const finalGrade = calcEndNote(subjects);
-  document.getElementById("result").innerHTML = `
-    <b>Endnote: </b>${finalGrade.finalRounded}
-  `;
-});
+  <footer class="wrap footer">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">SBM</div>
+      <div class="brandText">
+        <div class="brandLine">Made by <b>Saidburkan Moydunov</b></div>
+        <div class="muted small">WW-Kurs Notenrechner · Studienkolleg</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
