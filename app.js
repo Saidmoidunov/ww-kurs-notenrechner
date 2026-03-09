@@ -9,7 +9,9 @@
 <body>
   <header class="wrap">
     <h1>WW-Kurs Notenrechner</h1>
-    <p class="muted">Noten: 1,0–5,0 · Gewichtung: 10–100% · Rundung: 4,5 → 4 / 4,6 → 5</p>
+    <p class="muted">
+      Noten: 1,0–5,0 · Gewichtung: 10–100% · Rundung: 4,5 → 4 / 4,6 → 5
+    </p>
   </header>
 
   <main class="wrap grid">
@@ -26,6 +28,7 @@
 
       <div class="row">
         <button id="btnMotivation" type="button">✨ Motivation</button>
+        <button id="btnResetSubject" type="button" class="danger">🧹 Fach zurücksetzen</button>
       </div>
 
       <p id="motivationBox" class="quote"></p>
@@ -57,17 +60,24 @@
         <input id="target" placeholder="z.B. 3.0" inputmode="decimal" />
         <button id="btnSaveTarget" type="button">🎯 Zielnote speichern</button>
       </div>
+      <p class="muted">Zielnote gilt: „… oder besser“ (nach Rundungsregel).</p>
 
       <hr />
 
-      <button id="btnCalculate" type="button">📊 Alle Noten berechnen</button>
-
-      <div id="result"></div>
+      <div class="row">
+        <button id="btnExport" type="button">⬇️ Export (JSON)</button>
+        <label class="file">
+          ⬆️ Import (JSON)
+          <input id="importFile" type="file" accept="application/json" />
+        </label>
+      </div>
+      <p class="muted small">Automatische Speicherung im Browser (localStorage).</p>
     </section>
 
     <section class="card span2">
       <h2>3) Übersicht</h2>
       <div id="list"></div>
+      <div id="result" class="result"></div>
     </section>
   </main>
 
