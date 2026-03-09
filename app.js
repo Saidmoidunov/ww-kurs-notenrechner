@@ -29,7 +29,7 @@ function clampNote(x) { return Math.max(1.0, Math.min(5.0, x)); }
 function roundHalfDown(x) {
   const base = Math.floor(x);
   const frac = x - base;
-  return (frac < 0.5) ? base : base + 1;
+  return (frac <= 0.5) ? base : base + 1;
 }
 
 function calc(list) {
