@@ -1,79 +1,133 @@
-:root { font-family: system-ui, Arial, sans-serif; }
-body { margin: 0; background: #f6f7fb; color: #111; }
-.wrap { max-width: 980px; margin: 0 auto; padding: 16px; }
-h1 { margin: 8px 0 4px; }
-h2 { margin: 0 0 10px; font-size: 18px; }
-h3 { margin: 0 0 8px; font-size: 16px; }
-.muted { color: #555; }
-.small { font-size: 13px; }
+:root {
+  font-family: system-ui, Arial, sans-serif;
+}
 
-.grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
-@media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } .span2 { grid-column: span 2; } }
-
-.card { background: white; border-radius: 14px; padding: 14px; box-shadow: 0 6px 16px rgba(0,0,0,.06); }
-label { display: block; margin: 10px 0 6px; font-weight: 600; }
-input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 10px; }
-button { margin-top: 12px; width: 100%; padding: 10px; border: 0; border-radius: 10px; cursor: pointer; background: #2b6cff; color: white; font-weight: 700; }
-button:hover { filter: brightness(.98); }
-.row { display: flex; gap: 10px; align-items: center; }
-.col { flex: 1; }
-.danger { background: #d63b3b; }
-hr { border: none; border-top: 1px solid #eee; margin: 14px 0; }
-.quote { margin: 12px 0 0; padding: 10px; background: #f2f6ff; border-radius: 10px; min-height: 22px; }
-.result { margin-top: 12px; padding: 12px; background: #f7f7f7; border-radius: 12px; }
-.table { width: 100%; border-collapse: collapse; }
-.table th, .table td { padding: 8px; border-bottom: 1px solid #eee; text-align: left; }
-.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; }
-.ok { background: #e8fff0; }
-.no { background: #ffecec; }
-
-.file { display: inline-flex; align-items: center; justify-content: center; padding: 10px; border-radius: 10px; background: #111; color: #fff; cursor: pointer; width: 100%; margin-top: 12px; }
-.file input { display: none; }
-
-/* mini delete button */
-button.mini{
-  width: auto;
-  padding: 6px 10px;
+body {
   margin: 0;
-  border-radius: 10px;
-  font-weight: 800;
-}
-
-/* Branding */
-.footer { padding-bottom: 34px; }
-.brand { display: flex; gap: 12px; align-items: center; justify-content: center; }
-.logo {
-  width: 46px; height: 46px; border-radius: 14px;
-  display: grid; place-items: center;
-  background: #111; color: #fff;
-  font-weight: 900; letter-spacing: 1px;
-}
-.brandLine { font-size: 14px; }
-
-/* Corner badge */
-.cornerBadge{
-  position: fixed;
-  right: 14px;
-  bottom: 14px;
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  padding: 10px 12px;
-  background: rgba(17,17,17,.92);
+  background: url('https://www.peakpx.com/en/hd-wallpaper-desktop-aoanm') no-repeat center center fixed;
+  background-size: cover;
   color: #fff;
-  border-radius: 999px;
-  text-decoration: none;
-  font-size: 12.5px;
-  box-shadow: 0 10px 24px rgba(0,0,0,.18);
-  backdrop-filter: blur(6px);
 }
-.cornerBadge .dot{
-  width: 8px; height: 8px;
-  border-radius: 999px;
-  background: #2b6cff;
+
+.wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.5); /* Фонго жарым-жартылай тунук түстө фон */
+  border-radius: 15px;
 }
-.cornerBadge b{
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: .4px;
+
+h1, h2, h3 {
+  font-family: 'Arial', sans-serif;
+}
+
+h1 {
+  color: #fff;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+h2, h3 {
+  color: #f1f1f1;
+  margin: 10px 0;
+}
+
+.muted {
+  color: #bbb;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .span2 {
+    grid-column: span 2;
+  }
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 12px;
+  border-radius: 10px;
+  background-color: #2b6cff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1d58cc;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.col {
+  flex: 1;
+}
+
+hr {
+  margin: 14px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+footer {
+  padding-top: 20px;
+  text-align: center;
+}
+
+footer .brand {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+  color: #fff;
+}
+
+footer .logo {
+  background-color: #111;
+  padding: 12px;
+  border-radius: 50%;
+  font-size: 18px;
+  color: #fff;
+}
+
+footer .brandText {
+  font-size: 14px;
+}
+
+footer .brandLine {
+  font-weight: bold;
 }
