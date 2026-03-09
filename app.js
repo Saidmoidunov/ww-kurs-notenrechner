@@ -1,6 +1,6 @@
 const SUBJECTS = {
   1: ["Deutsch", "Mathematik", "VWL", "Informatik", "Englisch", "Wirtschaftspsychologie"],
-  2: ["Deutsch", "Mathematik", "BWL", "Informatik", "Englisch", "Wirtschaftspsychologie", "FPS"],
+  2: ["Deutsch", "Mathematik", "BWL", "Informatik", "Englisch", "Wirtschaftspsychologie"],
 };
 
 const QUOTES = [
@@ -81,11 +81,7 @@ document.getElementById("btnCalculate").addEventListener("click", () => {
   ];
 
   const finalGrade = calcEndNote(subjects);
-  const targetGrade = 3.0;  // Example target grade
-  
-  const target = neededForTarget(subjects, targetGrade);
   document.getElementById("result").innerHTML = `
-    <b>Endnote: </b>${finalGrade.finalRounded} <br>
-    <b>Benötigte Note für das Ziel (${targetGrade}):</b> ${target.needed}
+    <b>Endnote: </b>${finalGrade.finalRounded}
   `;
 });
