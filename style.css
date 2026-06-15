@@ -286,4 +286,19 @@ select {
 
 footer .brand {
   color: #111 !important;
+} /* ===== FIX: ак тексттерди кара кылуу ===== */
+
+header p,
+header .muted,
+header .white {
+  color: #111 !important;
+}
+
+footer,
+footer .brand,
+footer .brandText,
+footer .brandLine,
+footer .white,
+footer .muted {
+  color: #111 !important;
 }
