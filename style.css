@@ -77,3 +77,27 @@ button.mini{
   text-transform: uppercase;
   letter-spacing: .4px;
 }
+/* FIX: Karten wieder weiß machen */
+.card {
+  background: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.result {
+  background: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.quote {
+  background: #f2f6ff !important;
+  opacity: 1 !important;
+}
+
+input,
+select {
+  background: #ffffff !important;
+}
+
+footer .brand {
+  color: #111 !important;
+}
