@@ -264,4 +264,153 @@ function escapeHtml(s) {
 }
 
 populateSubjects();
+render();/* ===== EXTRA FIX: Zielnote, Summe Gewichtung, offen өчүрүү ===== */
+/* Кодду app.js файлынын ЭҢ АСТЫНА кош */
+
+/* 1) Zielnote бөлүгүн экрандан жашыруу */
+function hideZielnoteBlock() {
+  const targetInput = document.getElementById("target");
+  const targetButton = document.getElementById("btnSaveTarget");
+
+  if (targetInput) {
+    const row = targetInput.closest(".row");
+
+    if (row) row.style.display = "none";
+
+    const h3 = row?.previousElementSibling;
+    if (h3 && h3.tagName === "H3") h3.style.display = "none";
+
+    const hrBefore = h3?.previousElementSibling;
+    if (hrBefore && hrBefore.tagName === "HR") hrBefore.style.display = "none";
+
+    const p = row?.nextElementSibling;
+    if (p) p.style.display = "none";
+
+    const hrAfter = p?.nextElementSibling;
+    if (hrAfter && hrAfter.tagName === "HR") hrAfter.style.display = "none";
+  }
+
+  if (targetButton) {
+    targetButton.style.display = "none";
+  }
+}
+
+/* 2) Render функциясын үстүнөн жазабыз:
+   - Summe Gewichtung жок
+   - offen жок
+   - Zielnote жок
+   - Durchschnitt 1 цифра менен чыгат: 2,7
+*/
+render = function () {
+  const sem = Number(elSemester.value);
+  const subject = elSubject.value;
+
+  const data = load();
+  const semData = ensureSem(data, sem);
+  const list = ensureSubject(semData, subject);
+
+  if (list.length === 0) {
+    elList.innerHTML = `<p class="muted">Noch keine Einträge für <b>${subject}</b>.</p>`;
+  } else {
+    const rows = list.map((it, idx) => `
+      <tr>
+        <td>${idx + 1}</td>
+        <td>${escapeHtml(it.title)}</td>
+        <td>${it.note.toFixed(2).replace(".", ",")}</td>
+        <td>${it.weight}%</td>
+        <td style="text-align:right;">
+          <button class="mini danger" data-del="${idx}" type="button">🗑️</button>
+        </td>
+      </tr>
+    `).join("");
+
+    elList.innerHTML = `
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Leistung</th>
+            <th>Note</th>
+            <th>Gew.</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  const res = calc(list);
+
+  let html = `
+    <div><b>${subject}</b> (Semester ${sem})</div>
+  `;
+
+  if (res.raw == null) {
+    html += `<div class="muted">Noch nichts zu berechnen.</div>`;
+  } else {
+    html += `
+      <div>Durchschnitt (roh): <b>${res.raw.toFixed(1).replace(".", ",")}</b></div>
+      <div>Gerundet: <b>${res.rounded}</b> <span class="badge ${res.rounded <= 4 ? "ok" : "no"}">${res.status}</span></div>
+    `;
+  }
+
+  elResult.innerHTML = html;
+
+  hideZielnoteBlock();
+  save(data);
+};
+
+/* 3) Speichern кнопкасын 100% confirm жок кылып кайра иштетүү */
+document.getElementById("btnAdd").addEventListener("click", function (e) {
+  e.preventDefault();
+  e.stopImmediatePropagation();
+
+  const sem = Number(elSemester.value);
+  const subject = elSubject.value;
+  const title = (elTitle.value || "").trim();
+
+  let note = parseNum(elNote.value);
+  let weight = parseNum(elWeight.value);
+
+  if (title.length < 2) {
+    return alert("Bitte einen Namen eingeben (mind. 2 Zeichen).");
+  }
+
+  if (!Number.isFinite(note)) {
+    return alert("Bitte eine gültige Note eingeben (z.B. 3,3).");
+  }
+
+  if (!Number.isFinite(weight)) {
+    return alert("Bitte eine gültige Gewichtung eingeben (z.B. 40).");
+  }
+
+  note = clampNote(note);
+
+  if (weight < 10 || weight > 100) {
+    return alert("Gewichtung muss zwischen 10 und 100 liegen.");
+  }
+
+  const data = load();
+  const semData = ensureSem(data, sem);
+  const list = ensureSubject(semData, subject);
+
+  /* Бул жерде confirm жок. 100% ашса дагы сактайт. */
+  list.push({
+    title,
+    note,
+    weight,
+    ts: Date.now()
+  });
+
+  save(data);
+
+  elTitle.value = "";
+  elNote.value = "";
+  elWeight.value = "";
+
+  render();
+}, true);
+
+/* 4) Башында дароо иштетүү */
+hideZielnoteBlock();
 render();
